@@ -1,16 +1,25 @@
-#!/bin/bash
+#!/bin/sh
 #
 # Perform necessary smartos-vmtools setup steps
 # after package is installed.
 #
 
-PROGNAME=$(basename $0)
+PROGNAME=`basename $0`
+INSTALLER_DIR="/opt/smartos-vmtools"
+LIB_DIR="/lib/smartdc"
 
-function error_exit
+error_exit()
 {
   echo "${PROGNAME}: ${1:-"Unknown Error"}" 1>&2
   exit 1
 }
+
+# rm -f before ln -sf is required for solaris 9
+rm -f $LIB_DIR/mdata-get
+
+mkdir -p $LIB_DIR
+ln -sf $INSTALLER_DIR/bin/mdata-get $LIB_DIR || \
+  error_exit "Cannot link mdata-get to $LIB_DIR"
 
 echo "Thank you for installing smartos-vmtools!"
 

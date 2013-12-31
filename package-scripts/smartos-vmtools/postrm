@@ -1,9 +1,15 @@
-#!/bin/bash
+#!/bin/sh
 #
 # Perform necessary smartos-vmtools removal steps
 # after package is uninstalled.
 #
 
-echo "smartos-vmtools has been uninstalled!"
+LIB_DIR="/lib/smartdc"
+
+# Clean up binary symlinks if they exist
+# see: http://tickets.opscode.com/browse/CHEF-3022
+if [ ! -f /etc/redhat-release -o "x$1" = "x0" ]; then
+  rm -f $LIB_DIR/mdata-get
+fi
 
 exit 0

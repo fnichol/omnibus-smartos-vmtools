@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 #
 # Install a full smartos-vmtools
 #
@@ -6,7 +6,6 @@
 PROGNAME=`basename $0`
 INSTALLER_DIR=`dirname $0`
 DEST_DIR=/opt/smartos-vmtools
-CONFIG_DIR=/etc/smartos-vmtools
 USAGE="usage: $0"
 
 error_exit()
@@ -21,7 +20,11 @@ mkdir -p $DEST_DIR || error_exit "Cannot create $DEST_DIR"
 cp -R $INSTALLER_DIR $DEST_DIR || error_exit "Cannot install to $DEST_DIR"
 rm -f $DEST_DIR/$PROGNAME
 
-# You may want to symlink your packages bin files into /usr/bin
-# ln -sf $DEST_DIR/bin/smartos-vmtools /usr/bin || error_exit "Cannot link smartos-vmtools to /usr/bin"
+# rm -f before ln -sf is required for solaris 9
+rm -f $LIB_DIR/mdata-get
+
+mkdir -p $LIB_DIR
+ln -sf $INSTALLER_DIR/bin/mdata-get $LIB_DIR || \
+  error_exit "Cannot link mdata-get to $LIB_DIR"
 
 exit 0

@@ -1,7 +1,7 @@
 
 name "smartos-vmtools"
-maintainer "CHANGE ME"
-homepage "CHANGEME.com"
+maintainer "fnichol@nichol.ca"
+homepage "https://github.com/fnichol/omnibus-smartos-vmtools"
 
 replaces        "smartos-vmtools"
 install_path    "/opt/smartos-vmtools"
@@ -12,7 +12,7 @@ build_iteration 1
 dependency "preparation"
 
 # smartos-vmtools dependencies/components
-# dependency "somedep"
+dependency "mdata-client"
 
 # version manifest file
 dependency "version-manifest"
