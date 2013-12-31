@@ -1,0 +1,9 @@
+#!/bin/bash
+#
+# Perform necessary smartos-vmtools removal steps
+# after package is uninstalled.
+#
+
+echo "smartos-vmtools has been uninstalled!"
+
+exit 0
