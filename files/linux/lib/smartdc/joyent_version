@@ -1,0 +1,7 @@
+linux_distro: {{LINUX_DISTRO}}
+linux_distro_version: {{LINUX_DISTRO_VERSION}}
+linux_distro_name: {{LINUX_DISTRO_NAME}}
+joyent_dataset_version: {{JOYENT_DATASET_VERSION}}
+custom_dataset_customer:
+custom_dataset_type:
+custom_dataset_version:

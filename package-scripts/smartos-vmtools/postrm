@@ -9,7 +9,11 @@ LIB_DIR="/lib/smartdc"
 # Clean up binary symlinks if they exist
 # see: http://tickets.opscode.com/browse/CHEF-3022
 if [ ! -f /etc/redhat-release -o "x$1" = "x0" ]; then
-  rm -f $LIB_DIR/mdata-get
+  rm -f $LIB_DIR
+  rm -f /usr/sbin/mdata-delete
+  rm -f /usr/sbin/mdata-get
+  rm -f /usr/sbin/mdata-list
+  rm -f /usr/sbin/mdata-put
 fi
 
 exit 0

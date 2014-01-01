@@ -13,6 +13,7 @@ dependency "preparation"
 
 # smartos-vmtools dependencies/components
 dependency "mdata-client"
+dependency "smartdc"
 
 # version manifest file
 dependency "version-manifest"

@@ -5,7 +5,8 @@
 #
 
 PROGNAME=`basename $0`
-INSTALLER_DIR="/opt/smartos-vmtools"
+OMNIBUS="/opt/smartos-vmtools"
+EMBEDDED="$OMNIBUS/embedded"
 LIB_DIR="/lib/smartdc"
 
 error_exit()
@@ -15,11 +16,25 @@ error_exit()
 }
 
 # rm -f before ln -sf is required for solaris 9
-rm -f $LIB_DIR/mdata-get
+rm -f $LIB_DIR
 
-mkdir -p $LIB_DIR
-ln -sf $INSTALLER_DIR/bin/mdata-get $LIB_DIR || \
-  error_exit "Cannot link mdata-get to $LIB_DIR"
+mkdir -p `dirname $LIB_DIR`
+ln -sf $EMBEDDED/lib/smartdc $LIB_DIR || \
+  error_exit "Cannot link $EMBEDDED/lib/smartdc to $LIB_DIR"
+
+for bin in mdata-delete mdata-get mdata-list mdata-put ; do
+  ln -sf $OMNIBUS/bin/$bin /usr/sbin/$bin || \
+    error_exit "Cannot link $bin to /usr/sbin/$bin"
+done ; unset bin
+
+for f in /etc/acpi/events/powerbtn-acpi-support ; do
+  if [ -f "$EMBEDDED$f" ] ; then
+    rm -f $f
+    mkdir -p `dirname $f`
+    ln -sf $EMBEDDED$f $f || \
+      error_exit "Cannot link $EMBEDDED$f to $f"
+  fi
+done
 
 echo "Thank you for installing smartos-vmtools!"
 

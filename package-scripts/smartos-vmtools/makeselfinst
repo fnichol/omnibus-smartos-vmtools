@@ -6,6 +6,8 @@
 PROGNAME=`basename $0`
 INSTALLER_DIR=`dirname $0`
 DEST_DIR=/opt/smartos-vmtools
+OMNIBUS="$DEST_DIR"
+EMBEDDED="$OMNIBUS/embedded"
 USAGE="usage: $0"
 
 error_exit()
@@ -21,10 +23,15 @@ cp -R $INSTALLER_DIR $DEST_DIR || error_exit "Cannot install to $DEST_DIR"
 rm -f $DEST_DIR/$PROGNAME
 
 # rm -f before ln -sf is required for solaris 9
-rm -f $LIB_DIR/mdata-get
+rm -f $LIB_DIR
 
-mkdir -p $LIB_DIR
-ln -sf $INSTALLER_DIR/bin/mdata-get $LIB_DIR || \
-  error_exit "Cannot link mdata-get to $LIB_DIR"
+mkdir -p `dirname $LIB_DIR`
+ln -sf $EMBEDDED/lib/smartdc $LIB_DIR || \
+  error_exit "Cannot link $EMBEDDED/lib/smartdc to $LIB_DIR"
+
+for bin in mdata-delete mdata-get mdata-list mdata-put ; do
+  ln -sf $OMNIBUS/bin/$bin /usr/sbin/$bin || \
+    error_exit "Cannot link $bin to /usr/sbin/$bin"
+done ; unset bin
 
 exit 0
